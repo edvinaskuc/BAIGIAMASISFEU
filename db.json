@@ -1,13 +1,17 @@
 {
-  "posts": [
-    { "id": "1", "title": "a title", "views": 100 },
-    { "id": "2", "title": "another title", "views": 200 }
-  ],
-  "comments": [
-    { "id": "1", "text": "a comment about post 1", "postId": "1" },
-    { "id": "2", "text": "another comment about post 1", "postId": "1" }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  "games": [],
+  "top3": [
+    {
+      "id": "2",
+      "title": "The Last Of Us: Part I",
+      "description": "The Last of Us Part I is a 2022 action-adventure game developed by Naughty Dog and published by Sony Interactive Entertainment. A remake of the 2013 game The Last of Us, it features revised gameplay, including enhanced combat and exploration, and expanded accessibility options. Players control Joel, who is tasked with escorting the young Ellie across a post-apocalyptic United States and defend her against cannibalistic creatures infected by a mutated strain of the Cordyceps fungus. The game includes a remake of the 2014 expansion pack The Last of Us: Left Behind, which follows Ellie and her best friend Riley. The original game's online multiplayer mode is omitted.",
+      "image": "thelastofus1.png"
+    },
+    {
+      "id": "3",
+      "title": "Hellblade: Senua’s Sacrifice",
+      "description": "Hellblade: Senua's Sacrifice is divided into two types of gameplay: the first allows Senua to walk freely and interact with her surroundings. Those parts focus on either story via voiceover, as Senua travels from one location to another, or the resolution of a puzzle or challenge of some kind to progress further. She can use a capacity known as 'focus', in reference to her tendency to see things differently from other people due to her condition, to trigger puzzle-related events. If she uses her focus on totems hidden throughout the game, it triggers a memory via voice-over of her friend Druth telling her of the stories of the Norsemen; activating all forty-four of them triggers a bonus cutscene shortly before the game's climax, that extends on Druth's backstory. Several areas feature their own exclusive mechanics or trials, such as reaching a safe zone in time before Senua dies, or using the focus ability to modify the structure of her surroundings.",
+      "image": "hellblade.jpg"
+    }
+  ]
 }

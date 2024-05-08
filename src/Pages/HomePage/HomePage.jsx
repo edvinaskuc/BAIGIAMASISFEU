@@ -1,4 +1,4 @@
-import headerImage from "./assets/header.png";
+import headerImage from "../../assets/header.png";
 import "./HomePage.css";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";

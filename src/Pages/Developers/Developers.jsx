@@ -1,9 +1,9 @@
-import nT from "./assets/nt.jpg";
-import nD from "./assets/nd.png";
-import rG from "./assets/rg.png";
-import fS from "./assets/fs.png";
-import riot from "./assets/riot.png";
-import santaMonica from "./assets/santa.png";
+import nT from "../../assets/nt.jpg";
+import nD from "../../assets/nd.png";
+import rG from "../../assets/rg.png";
+import fS from "../../assets/fs.png";
+import riot from "../../assets/riot.png";
+import santaMonica from "../../assets/santa.png";
 // import hellBlade from "./assets/hellblade.jpg";
 
 function Developers() {

@@ -1,42 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Table, Modal, Form } from "react-bootstrap";
 
 function AddGame() {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
-  const [editIndex, setEditIndex] = useState(null);
+  const [editId, setEditId] = useState(null);
   const [input, setInput] = useState({
     picture: "",
-    description: "",
+    Name: "",
     developers: "",
     year: "",
   });
 
+  const fetchGames = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/games");
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGames();
+  }, []);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSave = () => {
-    if (editIndex === null) {
-      setData([...data, input]);
+  const handleSave = async () => {
+    if (editId === null) {
+      const response = await fetch(`http://localhost:3000/games`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(input),
+      });
+      fetchGames();
     } else {
-      const newData = [...data];
-      newData[editIndex] = input;
-      setData(newData);
+      const response = await fetch(`http://localhost:3000/games/${editId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(input),
+      });
+      setEditId(null);
+
+      if (response.ok) {
+        fetchGames();
+      } else {
+        console.error("Something went wrong");
+      }
     }
     handleClose();
   };
 
   const handleEdit = (index) => {
     setInput(data[index]);
-    setEditIndex(index);
+    setEditId(data[index].id);
     handleShow();
   };
 
-  const handleDelete = (index) => {
-    const newData = [...data];
-    newData.splice(index, 1);
-    setData(newData);
-  };
+  async function handleDelete(id) {
+    const response = await fetch(`http://localhost:3000/games/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      fetchGames();
+    } else {
+      console.error("Something went wrong");
+    }
+  }
 
   return (
     <>
@@ -51,22 +86,21 @@ function AddGame() {
           display: "flex",
           justifyContent: "center",
           alignItems: "flex-start",
-          //   height: "100vh",
         }}
       >
         <div>
           <Button
             variant="primary"
             onClick={handleShow}
-            className="mx-auto d-block mb-5" // centers the button
-            style={{ fontSize: "20px", padding: "10px 20px" }} // makes the button bigger
+            className="mx-auto d-block mb-5"
+            style={{ fontSize: "20px", padding: "10px 20px" }}
           >
             Add Game
           </Button>
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Add Game</Modal.Title>
+              <Modal.Title>{editId ? "Save" : "Add game"}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form.Group>
@@ -78,13 +112,11 @@ function AddGame() {
                     setInput({ ...input, picture: e.target.value })
                   }
                 />
-                <Form.Label>Description</Form.Label>
+                <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
-                  value={input.description}
-                  onChange={(e) =>
-                    setInput({ ...input, description: e.target.value })
-                  }
+                  value={input.Name}
+                  onChange={(e) => setInput({ ...input, Name: e.target.value })}
                 />
                 <Form.Label>Developers</Form.Label>
                 <Form.Control
@@ -107,7 +139,7 @@ function AddGame() {
                 Close
               </Button>
               <Button variant="primary" onClick={handleSave}>
-                Add Game
+                {editId ? "Save" : "Add game"}
               </Button>
             </Modal.Footer>
           </Modal>
@@ -117,7 +149,7 @@ function AddGame() {
               <tr>
                 <th>#</th>
                 <th>Picture</th>
-                <th>Description</th>
+                <th>Name</th>
                 <th>Developers</th>
                 <th>Year</th>
                 <th>Actions</th>
@@ -138,7 +170,7 @@ function AddGame() {
                       }}
                     />
                   </td>
-                  <td>{item.description}</td>
+                  <td>{item.Name}</td>
                   <td>{item.developers}</td>
                   <td>{item.year}</td>
                   <td>
@@ -147,7 +179,7 @@ function AddGame() {
                     </Button>
                     <Button
                       variant="danger"
-                      onClick={() => handleDelete(index)}
+                      onClick={() => handleDelete(item.id)}
                     >
                       Delete
                     </Button>
